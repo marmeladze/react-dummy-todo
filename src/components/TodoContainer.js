@@ -1,31 +1,25 @@
 import React from "react"
 import TodoList from './TodoList';
 import Input from './Input';
-import Example from './Hookah';
 class TodoContainer extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      next_id: 4,
-      todos: [
-         {
-           id: 1,
-           title: "make todo container",
-           completed: true
-         },
-         {
-           id: 2,
-           title: "create redux middleware",
-           completed: false
-         },
-         {
-           id: 3,
-           title: "make production build",
-           completed: false
-         }
-      ]
+      next_id: null,
+      todos: []
     };    
+  }
+
+  componentDidMount = () => {
+    let url = "https://run.mocky.io/v3/90b8def9-9e7d-4289-9474-5d8b12159631";
+    fetch(url).
+      then(resp => resp.json()).then(data => {
+        this.setState({todos: data['todos']}, 
+          () => { this.setState({next_id: data['next_id']}) }
+        );
+    }
+    ).catch(e => console.error("Error"));
   }
 
   deleteTodo = (id) => {
@@ -36,7 +30,7 @@ class TodoContainer extends React.Component {
   addTodo = (todo_title) => {
     let todo = {id: this.state.next_id, title: todo_title, completed: false};
     let new_todos = [... this.state.todos, todo];
-    this.setState({todos: new_todos}, () => { this.setState({next_id: this.state.next_id + 1}) });
+    this.setState({todos: new_todos}, () => { this.setState({next_id: this.state.next_id + 1}) } );
   }
 
   toggle = (id) => {
