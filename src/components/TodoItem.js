@@ -4,12 +4,17 @@ class TodoItem extends React.Component {
   render() {
     return (
       <div>
-        <input 
-          type="checkbox" 
-          checked={this.props.todo.completed}
-          onChange={() => this.props.mummy(this.props.todo.id)} 
-        />
-        <li>{this.props.todo.title}</li>
+        <li>
+          <input 
+            type="checkbox" 
+            checked={this.props.todo.completed}
+            onChange={() => this.props.toggle(this.props.todo.id)} 
+          />
+          {this.props.todo.title}
+          <button onClick={() => this.props.deleteTodo(this.props.todo.id)}>
+            Delete
+          </button>
+        </li>
       </div>
     )
   }

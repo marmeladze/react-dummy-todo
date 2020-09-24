@@ -15,6 +15,11 @@ class Input extends React.Component {
     this.setState({data: data});
   }
 
+  sendData = (data) => {
+    this.props.append(this.state.data);
+    this.setState({data: ''});
+  }
+
   render() {
     return (
       <div>
@@ -24,7 +29,7 @@ class Input extends React.Component {
           placeholder= "create a todo item"
           onChange = {(e) => this.changeData(e.target.value)}
         />
-        <button onClick={()=>{this.props.append()}}>Submit</button>
+        <button onClick={()=> this.sendData(this.state.data) }>Submit</button>
       </div>
     );
   }
